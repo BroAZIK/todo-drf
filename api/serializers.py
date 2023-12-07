@@ -15,3 +15,9 @@ class TaskSerializer(serializers.Serializer):
             "info": f"{instance.id} {instance.title} is {'completed' if instance.completed else 'incompleted'}."
         }
 
+    def create(self, validated_data: dict) -> Task:
+        return Task.objects.create(
+            title=validated_data['title'],
+            description=validated_data['description'],
+            completed=validated_data['completed'],
+        )
