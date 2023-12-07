@@ -27,3 +27,33 @@ class TaskView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TaskDetailView(APIView):
+    def get(self, request: Request, pk: int) -> Response:
+        task = Task.objects.get(id=pk)
+
+        serializer = TaskSerializer(task)
+        
+        return Response(serializer.data)
+
+    def put(self, request: Request, pk: int) -> Response:
+        data = request.data
+
+        task = Task.objects.get(id=pk)
+
+        serializer = TaskSerializer(task, data=data)
+        
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data)
+
+        return Response(serializer.errors)
+
+    def delete(self, request: Request, pk: int) -> Response:
+        task = Task.objects.get(id=pk)
+        task.delete()
+
+        return Response({'message': 'deleted.'})
+        
