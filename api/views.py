@@ -4,10 +4,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
 
 from .models import Task
 
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer, UserSerializer
 
 
 class TaskView(APIView):
@@ -62,3 +63,13 @@ class TaskDetailView(APIView):
         task.delete()
 
         return Response({'message': 'deleted.'})
+
+
+class UsersView(APIView):
+    
+    def get(self, request: Request) -> Response:
+        users = User.objects.filter(is_superuser=False)
+
+        serializer = UserSerializer(users, many=True)
+        
+        return Response(serializer.data)

@@ -11,4 +11,4 @@ class Task(models.Model):
 
 
    def __str__(self):
-       return self.title
+       return f"{self.id}. {self.title} is {self.description}  created at {self.created.strftime('%d.%m.%Y')}"

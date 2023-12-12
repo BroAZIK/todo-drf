@@ -4,15 +4,20 @@ from django.contrib.auth.models import User
 from datetime import datetime
 
 
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = '__all__'
-
-
 class TaskSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Task
         fields = '__all__'
+
+
+class UserSerializer(serializers.ModelSerializer):
+    tasks = TaskSerializer(
+        many=True,
+        read_only=True
+    )
+
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'tasks']
+
