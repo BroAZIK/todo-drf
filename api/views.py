@@ -3,8 +3,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticated
 from django.contrib.auth.models import User
+
 
 from .models import Task
 
@@ -16,7 +17,7 @@ class TaskView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request: Request) -> Response:
-        tasks = request.user.tasks
+        tasks = Task.objects.all()
 
         serializer = TaskSerializer(tasks, many=True)
         
@@ -24,7 +25,6 @@ class TaskView(APIView):
 
     def post(self, request: Request) -> Response:
         data = request.data
-        data['user'] = request.user.id
 
         serializer = TaskSerializer(data=data)
 
