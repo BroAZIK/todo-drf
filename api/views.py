@@ -15,7 +15,7 @@ class TaskView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request: Request) -> Response:
-        tasks = Task.objects.all()
+        tasks = request.user.tasks
 
         serializer = TaskSerializer(tasks, many=True)
         
@@ -23,6 +23,7 @@ class TaskView(APIView):
 
     def post(self, request: Request) -> Response:
         data = request.data
+        data['user'] = request.user.id
 
         serializer = TaskSerializer(data=data)
 
