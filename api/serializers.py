@@ -6,20 +6,8 @@ from django.utils.timezone import now
 from base64 import b64decode
 from datetime import datetime
 
-def multiple_of_ten1(value):
-    if value % 10 != 0:
-        raise serializers.ValidationError('Not a multiple of ten')
-
-def multiple_of_ten2(value):
-    if value % 10 != 0:
-        raise serializers.ValidationError('Not a multiple of ten')
-
-def multiple_of_ten3(value):
-    if value % 10 != 0:
-        raise serializers.ValidationError('Not a multiple of ten')
 
 class TaskSerializer(serializers.ModelSerializer):
-    score = serializers.IntegerField(validators=[multiple_of_ten1, multiple_of_ten2, multiple_of_ten3])
 
     class Meta:
         model = Task

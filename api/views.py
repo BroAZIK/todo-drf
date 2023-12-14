@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authentication import BasicAuthentication
+from rest_framework.authentication import BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticated
 from django.contrib.auth.models import User
 
@@ -13,7 +13,7 @@ from .serializers import TaskSerializer, UserSerializer
 
 
 class TaskView(APIView):
-    authentication_classes = [BasicAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
     def get(self, request: Request) -> Response:
