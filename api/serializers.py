@@ -12,11 +12,6 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
-
-    def validate_title(self, value):
-        if value in ['title', 'sarlavha']:
-            raise serializers.ValidationError("Siz notogri title tanlagansiz.")
-        return value
         
 
 class UserSerializer(serializers.ModelSerializer):
