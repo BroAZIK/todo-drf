@@ -30,7 +30,7 @@ class TaskView(APIView):
         serializer = TaskSerializer(data=data)
 
         serializer.is_valid(raise_exception=True)
-        serializer.save
+        serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
